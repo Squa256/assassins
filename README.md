@@ -5,7 +5,7 @@
 ### Database setup
 
 ```
-sudo apt-get install postgresql postgresql-contrib libpq-dev
+sudo apt-get install postgresql postgresql-contrib libpq-dev python3-dev
 sudo su - postgres
 createdb assassinsdb
 createuser -P assassin
