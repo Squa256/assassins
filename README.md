@@ -31,7 +31,7 @@ Now make a Django settings file for your development environment.
 
 ```
 cd assassins/assassins
-cp default_settings.py settings.py
+cp settings.default.py settings.py
 ```
 
 In the new settings file, change the DATABASES password to match the one you made above.
