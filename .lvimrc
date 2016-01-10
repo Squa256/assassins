@@ -1,0 +1,13 @@
+"Use 4 width tabs
+
+"Number of visual spaces per tab
+set tabstop=4
+
+"Number of visual spaces per indent
+set shiftwidth=4
+
+"Number of spaces in a tab when editing
+set softtabstop=4
+
+"Tabs are tabs
+set noexpandtab
