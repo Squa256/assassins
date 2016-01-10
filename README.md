@@ -47,8 +47,9 @@ python manage.py runserver
 
 ### Editor Spacing setup
 
-This project will use 4 width *tabs* (this is important because python)
-Please set your editor's preferences to 4 width *tabs*
+This project will use 4 width **tabs** (this is important because python)
+
+Please set your editor's preferences to 4 width **tabs**
 
 If(when) you're using Vim you can use the local vimrc at the project's root to
 ensure consistent spacing and tabbing within this project.
