@@ -45,4 +45,16 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+### Editor Spacing setup
+
+If(when) you're using Vim you can use the vimrc at the project's root to
+ensure consistent spacing and tabbing within this project.
+
+To use the local vimrc (.lvimrc) install the local vimrc plugin:
+ * Go to http://www.vim.org/scripts/script.php?script_id=441
+ * Download the newest localvimrc.vba vimball
+ * Go to Downloads and open localvimrc.vba
+ * Run :so % | q
+ * Woo!
+
 Wooooo
