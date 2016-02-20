@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth.views import logout
 
 from . import views
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^login$', views.login, {'template_name':'registration/login.html'}, name='login'),
+	url(r'^logout$', logout, {'next_page':'index'}, name='logout'),
 	url(r'^user/', include('users.urls', namespace='users')),
 	url(r'^game/', include('games.urls', namespace='games')),
     url(r'^admin/', admin.site.urls),
