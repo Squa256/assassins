@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Game(models.Model):
@@ -36,6 +37,7 @@ class Membership(models.Model):
 		settings.AUTH_USER_MODEL,
 		null = True,
 		on_delete = models.SET_NULL,
+		related_name = 'assassins',
 	)
 	is_alive = models.BooleanField(
 		default = True,
