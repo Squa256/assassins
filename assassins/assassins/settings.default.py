@@ -34,6 +34,9 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+
 # Application definition
 
 INSTALLED_APPS = [
