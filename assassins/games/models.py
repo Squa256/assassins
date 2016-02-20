@@ -37,7 +37,7 @@ class Game(models.Model):
 	)
 
 	def start_game(self):
-		if Membership.objects.filter(game=self).count() <= 1:
+		if self.membership_set.count() <= 1:
 			pass #TODO
 
 		self.drop_unconfirmed_players()
@@ -49,13 +49,10 @@ class Game(models.Model):
 		pass
 
 	def drop_unconfirmed_players(self):
-		# TODO self.membership_set
-		Membership.objects.filter(game=self) \
-				.exclude(membership_status=0) \
-				.delete()
+		self.membership_set.exclude(membership_status=0).delete()
 
 	def assign_targets(self):
-		players = list(Membership.objects.filter(game=self))
+		players = list(self.membership_set)
 		shuffle(players)
 
 		if len(players) == 0:
