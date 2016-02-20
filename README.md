@@ -21,6 +21,9 @@ We need a message broker in order for task scheduling to work. We will use
 RabbitMQ, which can be installed by running:
 `sudo apt-get install rabbitmq-server`
 
+To run Celery in the background, use this command from /assassins/assassins:
+`celery multi start w1 -A assassins -l info`
+
 ### Django project & environment setup
 
 Make sure you have Python 3.4 and virtualenv installed.

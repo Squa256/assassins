@@ -14,8 +14,7 @@ def create(request):
 		form = CreateGameForm(request.POST)
 		if form.is_valid():
 			new_game = form.save()
-			new_game_id = new_game.id
-			return redirect('games:homepage', game_id=new_game_id)
+			return redirect('games:homepage', game_id=new_game.id)
 	else:
 		form = CreateGameForm()
 

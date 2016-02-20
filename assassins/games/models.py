@@ -1,9 +1,15 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.conf import settings
 
-# Create your models here.
+from datetime import datetime
+from random import shuffle
+
+from games.tasks import start_game, end_round
+
 class Game(models.Model):
 	name = models.CharField(
 		max_length = 20,
@@ -29,6 +35,52 @@ class Game(models.Model):
 		default = 0,
 		choices = PLAYER_APPROVAL_CHOICES,
 	)
+
+	def start_game(self):
+		if Membership.objects.filter(game=self).count() <= 1:
+			pass #TODO
+
+		self.drop_unconfirmed_players()
+		self.assign_targets()
+		self.notify_game_start()
+		self.schedule_new_round()
+
+	def end_round(self):
+		pass
+
+	def drop_unconfirmed_players(self):
+		# TODO self.membership_set
+		Membership.objects.filter(game=self) \
+				.exclude(membership_status=0) \
+				.delete()
+
+	def assign_targets(self):
+		players = list(Membership.objects.filter(game=self))
+		shuffle(players)
+
+		if len(players) == 0:
+			return
+
+		for i in range(len(players) - 1):
+			players[i].current_target = players[i + 1]
+			players[i].save()
+		players[-1].current_target = players[0]
+		players[-1].save()
+
+	def notify_game_start(self):
+		pass
+
+	def schedule_new_round(self):
+		self.description = 'celery says hi'
+		self.save()
+		end_round.apply_async(args=[self], eta=datetime.now() + self.round_length)
+
+
+@receiver(post_save, sender=Game)
+def create_game(sender, instance, created, **kwargs):
+	if created:
+		start_game.apply_async(args=[instance], eta=instance.start_date)
+
 
 class Membership(models.Model):
 	game = models.ForeignKey(
