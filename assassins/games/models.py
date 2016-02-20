@@ -115,3 +115,8 @@ class Membership(models.Model):
 	is_admin = models.BooleanField(
 		default = False,
 	)
+
+	class Meta:
+		unique_together = ('game', 'user')
+		index_together = ['game', 'user']
+

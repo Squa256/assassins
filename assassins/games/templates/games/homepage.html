@@ -8,3 +8,9 @@
 {% for mem in memberships %}
 	{{ mem.user }}
 {% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ add_username_form }}
+    <input type="submit" value="Submit" />
+</form>
