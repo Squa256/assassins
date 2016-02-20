@@ -5,9 +5,9 @@ from assassins import views as assassin_views
 from users.forms import CreateUserForm
 from users.models import User
 
-# Create your views here.
 def profile(request, user_id):
-	pass
+	user = User.objects.get(id=user_id)
+	return render(request, 'users/profile.html', {'user': user})
 
 def create(request):
 	if request.method == 'POST':
