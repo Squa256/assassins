@@ -2,8 +2,8 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 
 from assassins import views as assassin_views
-from forms import CreateUserForm
-from models import User
+from users.forms import CreateUserForm
+from users.models import User
 
 # Create your views here.
 def profile(request, user_id):
