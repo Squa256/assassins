@@ -16,6 +16,11 @@ GRANT ALL PRIVILEGES ON DATABASE assassinsdb TO assassin;
 
 Now you have a PostgreSQL database named 'assassinsdb' and a user named 'assassin' with full privileges.
 
+### Message Broker Setup
+We need a message broker in order for task scheduling to work. We will use
+RabbitMQ, which can be installed by running:
+`sudo apt-get install rabbitmq-server`
+
 ### Django project & environment setup
 
 Make sure you have Python 3.4 and virtualenv installed.
