@@ -5,6 +5,14 @@ from django.conf import settings
 
 # Create your models here.
 class Game(models.Model):
+	name = models.CharField(
+		max_length = 20,
+		default = 'Game',
+		blank = False,
+	)
+	description = models.TextField(
+		null = True,
+	)
 	max_num_players = models.PositiveIntegerField()
 	start_date = models.DateTimeField(
 		blank = False,
