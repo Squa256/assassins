@@ -1,4 +1,10 @@
+<a href="{% url 'logout' %}">Logout</a>
+
 {{ user }}
 {{ targets }}
 
-<a href="{% url 'logout' %}">Logout</a>
+<form method="post">
+    {% csrf_token %}
+    {{ killed_username_form }}
+    <input type="submit" value="Submit" />
+</form>
