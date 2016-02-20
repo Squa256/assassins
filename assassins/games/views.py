@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from games.forms import CreateGameForm
-from games.models import Game
+from games.models import Game, Membership
 
 # Create your views here.
 def homepage(request, game_id):
-	pass
+	game = Game.objects.get(id=game_id)
+	memberships = Membership.objects.filter(game=game)
+	return render(request, 'games/homepage.html',
+			{'game': game, 'memberships': memberships})
 
 def create(request):
 	if request.method == 'POST':
