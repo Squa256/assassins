@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
-	url(r'^login$', views.login, name='login'),
+	url(r'^login$', views.login, {'template_name':'registration/login.html'}, name='login'),
 	url(r'^user/', include('users.urls', namespace='users')),
 	url(r'^game/', include('games.urls', namespace='games')),
     url(r'^admin/', admin.site.urls),
