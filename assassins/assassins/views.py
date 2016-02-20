@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-def profile(user_id):
+def index():
 	pass
 
-def create():
+def login():
 	pass
