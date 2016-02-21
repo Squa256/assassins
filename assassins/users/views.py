@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 
@@ -6,7 +7,10 @@ from users.forms import CreateUserForm
 from users.models import User
 
 def profile(request, user_id):
-	user = User.objects.get(id=user_id)
+	try:
+		user = User.objects.get(id=user_id)
+	except User.DoesNotExist:
+		raise Http404
 	return render(request, 'users/profile.html', {'user': user})
 
 def create(request):

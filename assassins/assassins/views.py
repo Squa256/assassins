@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views
 
@@ -9,8 +10,14 @@ from users.models import User
 def claim_kill(request):
 	killed_username_form = KilledUsernameForm(request.POST)
 	if killed_username_form.is_valid():
-		killed_user = User.objects.get(username=killed_username_form.cleaned_data['username'])
-		member = Membership.objects.get(user=killed_user)
+		try:
+			killed_user = User.objects.get(username=killed_username_form.cleaned_data['username'])
+		except User.DoesNotExist:
+			raise Http404('User does not exist')
+		try:
+			member = Membership.objects.get(user=killed_user)
+		except Membership.DoesNotExist:
+			raise Http404('Membership does not exist')
 		member.is_alive = False
 		member.save()
 	else:
@@ -19,7 +26,10 @@ def claim_kill(request):
 
 def confirm_or_deny_kill(request):
 	if request.POST.get('confirm'):
-		Membership.objects.get(user=request.user).delete()
+		try:
+			Membership.objects.get(user=request.user).delete()
+		except Membership.DoesNotExist:
+			raise Http404('Membership does not exist')
 	elif request.POST.get('deny'):
 		#Set 24 hour timer until user is removed
 		pass
