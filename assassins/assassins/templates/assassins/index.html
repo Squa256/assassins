@@ -1,4 +1,23 @@
-Welcome
-<a href="{% url 'login' %}">Login</a>
-<a href="{% url 'users:create' %}">Create User</a>
-<a href="{% url 'games:create' %}">Create Game</a>
+<head>
+	<div style="width: 100%; padding: 0 0 20px 0; clear:both;" align="center">
+		<font size="8">Welcome</font>
+	</div>
+</head>
+
+<body>
+	<div style="width: 50%; float:left;" align="center">
+		This is a brief description of the game. This is a stupid icebreaker game that
+			you have to play freshman year with stickers, that becomes way more cool when
+			you play it with nerf guns.
+	</div>
+	<div style="width: 50%; float:right;" align="center">
+		<p>
+			<a href="{% url 'login' %}">Login</a>
+		</p>
+	
+		<p>
+			<a href="{% url 'users:create' %}">Create User</a>
+		</p>
+	</div>
+</body>
+
