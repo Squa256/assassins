@@ -1,10 +1,21 @@
 <a href="{% url 'logout' %}">Logout</a>
 
 {{ user }}
-{{ targets }}
 
-<form method="post">
-    {% csrf_token %}
-    {{ killed_username_form }}
-    <input type="submit" value="Submit" />
-</form>
+{% for membership in memberships %}
+	{% if membership.is_alive %}
+		{{ membership.game.name }}
+		{{ membership.current_target }}
+		<form method="post">
+			{% csrf_token %}
+			{{ killed_username_form }}
+			<input type="submit" value="Submit" />
+		</form>
+	{% else %}
+		<form method="post">
+			{% csrf_token %}
+			<input type="submit" name="confirm" value="Confirm" />
+			<input type="submit" name="deny" value="Deny" />
+		</form>
+	{% endif %}
+{% endfor %}
