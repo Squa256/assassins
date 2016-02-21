@@ -46,13 +46,17 @@ class Game(models.Model):
 		self.schedule_new_round()
 
 	def end_round(self):
-		pass
+		self.resolve_protests()
+		self.drop_stagnated_players()
+		self.assign_targets()
+		if self.membership_set.count() > 1:
+			self.schedule_new_round()
 
 	def drop_unconfirmed_players(self):
 		self.membership_set.exclude(membership_status=0).delete()
 
 	def assign_targets(self):
-		players = list(self.membership_set)
+		players = list(self.membership_set.all())
 		shuffle(players)
 
 		if len(players) == 0:
@@ -72,9 +76,36 @@ class Game(models.Model):
 		self.save()
 		end_round.apply_async(args=[self], eta=datetime.now() + self.round_length)
 
+	def resolve_protests(self):
+		pass
+
+	def drop_stagnated_players(self):
+		stagnants = []
+		for m in self.membership_set.filter(is_alive=True):
+			if m.is_stagnant(self):
+				stagnants.append(m)
+
+		m = self.membership_set.filter(is_alive=True).first()
+
+		while stagnants:
+			next_m = m.current_target
+			if m in stagnants:
+				assassin = m.user.assassins.get(game=self)
+				assassin.current_target = m.current_target
+				assassin.save()
+
+				m.is_alive = False
+				m.current_target = None
+				m.save()
+				stagnants.remove(m)
+
+				next_m = assassin.current_target
+
+			m = self.membership_set.get(is_alive=True, user=next_m, game=self)
+
 
 @receiver(post_save, sender=Game)
-def create_game(sender, instance, created, **kwargs):
+def save_game(sender, instance, created, **kwargs):
 	if created:
 		start_game.apply_async(args=[instance], eta=instance.start_date)
 
@@ -117,3 +148,6 @@ class Membership(models.Model):
 		unique_together = ('game', 'user')
 		index_together = ['game', 'user']
 
+	def is_stagnant(self, game):
+		target = Membership.objects.get(game=game, user=self.current_target)
+		return target.is_alive and self.is_alive
