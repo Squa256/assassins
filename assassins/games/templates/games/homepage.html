@@ -1,16 +1,22 @@
-{{ game.name }}
-{{ game.description }}
-{{ game.max_num_players }}
-{{ game.start_date }}
-{{ game.round_length }}
-{{ game.approval_preference }}
+{% extends "base.html" %}
 
-{% for mem in memberships %}
-	{{ mem.user }}
-{% endfor %}
+{% block content %}
+	<div align="center" style="position:relative;margin-top:100px">
+	{{ game.name }}
+	{{ game.description }}
+	{{ game.max_num_players }}
+	{{ game.start_date }}
+	{{ game.round_length }}
+	{{ game.approval_preference }}
 
-<form method="post">
-    {% csrf_token %}
-    {{ add_username_form }}
-    <input type="submit" value="Submit" />
-</form>
+	{% for mem in memberships %}
+		{{ mem.user }}
+	{% endfor %}
+
+	<form method="post">
+		{% csrf_token %}
+		{{ add_username_form }}
+		<input type="submit" value="Submit" />
+	</form>
+	</div>
+{% endblock content %}

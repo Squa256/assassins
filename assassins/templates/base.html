@@ -47,34 +47,16 @@
             <div class="form-group">
               <input type="password" placeholder="Password" class="form-control">
             </div> -->
-            <a href="/logout" class="btn btn-success">Sign out</a>
+            <a href="/login" class="btn btn-success">Sign in</a>
+            <a href="/user/create" class="btn btn-warning">Create User</a>
             <a href="/game/create" class="btn btn-danger">Create Game</a>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
-	<div align="center" style="position:relative;margin-top:100px">
-		{{ user }}
-
-		{% for membership in memberships %}
-			{% if membership.is_alive %}
-				{{ membership.game.name }}
-				{{ membership.current_target }}
-				<form method="post">
-					{% csrf_token %}
-					{{ killed_username_form }}
-					<input type="submit" value="Submit" />
-				</form>
-			{% else %}
-				<form method="post">
-					{% csrf_token %}
-					<input type="submit" name="confirm" value="Confirm" />
-					<input type="submit" name="deny" value="Deny" />
-				</form>
-			{% endif %}
-		{% endfor %}
-	</div>
+	{% block content %}
+	{% endblock content %}
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
@@ -92,5 +74,5 @@
 		r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
 		ga('create','UA-XXXXX-X','auto');ga('send','pageview');
 	</script>
-  </body>
+</body>
 </html>

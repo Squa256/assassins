@@ -1,6 +1,12 @@
-{{ user.username }}
-{{ user.first_name }}
-{{ user.last_name }}
-{{ user.email }}
-{{ user.major }}
-{{ user.profile_picture_url }}
+{% extends "base.html" %}
+
+{% block content %}
+	<div align="center" style="position:relative;margin-top:100px">
+		{{ user.username }}
+		{{ user.first_name }}
+		{{ user.last_name }}
+		{{ user.email }}
+		{{ user.major }}
+		{{ user.profile_picture_url }}
+	</div>
+{% endblock content %}
