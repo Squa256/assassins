@@ -11,7 +11,7 @@
 		<table style="border-collapse:separate;border-spacing:5px 10px">
 			<tr>
 				<td>{{ form.username.label_tag }}</td>
-				<td>{{ form.username }}</td>
+				<td>{{ form.username}}</td>
 			</tr>
 			<tr>
 				<td>{{ form.password.label_tag }}</td>
@@ -26,4 +26,10 @@
 		<input type="hidden" name="next" value="{{ next }}" />
 		</form>
 	</div>
+
+	<script>
+		$(function () {
+			$('input#id_username').focus();	
+		});
+	</script>
 {% endblock content %}
